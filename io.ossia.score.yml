@@ -203,8 +203,8 @@ modules:
       - cp -rf boost "${FLATPAK_DEST}/include/"
     sources:
       - type: archive
-        url: https://archives.boost.io/release/1.86.0/source/boost_1_86_0.tar.bz2
-        sha256: 1bed88e40401b2cb7a1f76d4bab499e352fa4d0c5f31c0dbae64e24d34d7513b
+        url: https://archives.boost.io/release/1.87.0/source/boost_1_87_0.tar.bz2
+        sha256: af57be25cb4c4f4b413ed692fe378affb4352ea50fbe294a11ef548f4d527d89
 
   # HAP video decoding
   - name: snappy
@@ -335,8 +335,8 @@ modules:
     builddir: true
     sources:
       - type: archive
-        url: https://github.com/ossia/score/releases/download/v3.3.2/ossia.score-3.3.2-src.tar.xz
-        sha256: 716db9cd86e6f197c006f1e724a370e2b1f582e56603c01a60d3a60e1aa213c0
+        url: https://github.com/ossia/score/releases/download/v3.4.0/ossia.score-3.4.0-src.tar.xz
+        sha256: cc608b5cde042fcf8dad1c5f4f6295af10f6516e06663fa3ef3dd1ed244d7a89
       - type: script
         dest-filename: run
         commands:
