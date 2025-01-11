@@ -361,4 +361,3 @@ modules:
       - install -Dm755 ../run "${FLATPAK_DEST}/bin/ossia-score"
       - install -d /app/extensions/Plugins
       - install -d /app/lib/ffmpeg
-      - sed -i '4d;5d;6d;7d' "${FLATPAK_DEST}/share/metainfo/ossia-score.appdata.xml"
