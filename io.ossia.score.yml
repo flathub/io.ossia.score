@@ -1,12 +1,12 @@
 id: io.ossia.score
 runtime: org.kde.Platform
-runtime-version: "6.8"
+runtime-version: "6.9"
 sdk: org.kde.Sdk
 sdk-extensions:
-  - org.freedesktop.Sdk.Extension.llvm19
+  - org.freedesktop.Sdk.Extension.llvm20
 build-options:
   env:
-    CXX: /usr/lib/sdk/llvm19/bin/clang++
+    CXX: /usr/lib/sdk/llvm20/bin/clang++
 command: ossia-score
 rename-desktop-file: ossia-score.desktop
 rename-icon: ossia-score
@@ -258,10 +258,8 @@ modules:
 
     sources:
       - type: archive
-        url: http://download.drobilla.net/suil-0.10.20.tar.xz
-        sha256: 334a3ed3e73d5e17ff400b3db9801f63809155b0faa8b1b9046f9dd3ffef934e
-      - type: patch
-        path: 0001-Add-an-x11_in_qt6-wrapper.patch
+        url: https://download.drobilla.net/suil-0.10.22.tar.xz
+        sha256: d720969e0f44a99d5fba35c733a43ed63a16b0dab867970777efca4b25387eb7
 
   # fmt
   - name: fmtlib
@@ -269,8 +267,8 @@ modules:
 
     sources:
       - type: archive
-        url: https://github.com/fmtlib/fmt/releases/download/11.0.2/fmt-11.0.2.zip
-        sha256: 40fc58bebcf38c759e11a7bd8fdc163507d2423ef5058bba7f26280c5b9c5465
+        url: https://github.com/fmtlib/fmt/releases/download/11.1.4/fmt-11.1.4.zip
+        sha256: 49b039601196e1a765e81c5c9a05a61ed3d33f23b3961323d7322e4fe213d3e6
 
   # spdlog
   - name: spdlog
@@ -278,8 +276,8 @@ modules:
 
     sources:
       - type: archive
-        url: https://github.com/gabime/spdlog/archive/refs/tags/v1.15.0.tar.gz
-        sha256: 9962648c9b4f1a7bbc76fd8d9172555bad1871fdb14ff4f842ef87949682caa5
+        url: https://github.com/gabime/spdlog/archive/refs/tags/v1.15.2.tar.gz
+        sha256: 7a80896357f3e8e920e85e92633b14ba0f229c506e6f978578bdc35ba09e9a5d
 
   # hdf5
   - name: hdf5
@@ -335,13 +333,15 @@ modules:
     builddir: true
     sources:
       - type: archive
-        url: https://github.com/ossia/score/releases/download/v3.4.1/ossia.score-3.4.1-src.tar.xz
-        sha256: 2c7098df01f91dc1c917b9662304004c1d95143b7860a8bb1c2951b818b08f72
+        url: https://github.com/ossia/score/releases/download/v3.5.1/ossia.score-3.5.1-src.tar.xz
+        sha256: 3c04e6a4cd63372f07132c4128c2ddcbf1b44c5eb63448a8f50124040abb4aca
       - type: script
         dest-filename: run
         commands:
           - export LV2_PATH=$HOME/.lv2:/app/extensions/Plugins/lv2:/app/lib/lv2
           - exec ossia-score.bin "$@"
+      - type: patch
+        path: 0001-v3.5.1-appdata-release-notes.patch
 
     config-opts:
       # Note: don't use RelWithDebInfo as ossia release builds explicitly expect Release build type.
