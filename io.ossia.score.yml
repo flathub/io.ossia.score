@@ -86,6 +86,22 @@ modules:
   - shared-modules/linux-audio/lv2.json
   - shared-modules/linux-audio/lilv.json
 
+  # dr_libs needed by ysfx and score
+  - name: dr_libs
+    buildsystem: simple
+    no-make-install: true
+
+    sources:
+      - type: archive
+        url: https://github.com/mackron/dr_libs/archive/9cb7092ac8c75a82b5c6ea72652ca8d0091d7ffa.zip
+        sha256: 16775423774daf692c6665b89a5ed38e65fb60b42e5864d646debafc3f52e98d
+
+    build-commands: [ ]
+    post-install:
+      - install -Dm644 -t ${FLATPAK_DEST}/include/ dr_mp3.h
+      - install -Dm644 -t ${FLATPAK_DEST}/include/ dr_flac.h
+      - install -Dm644 -t ${FLATPAK_DEST}/include/ dr_wav.h
+
   # Audio I/O
   - name: portaudio
     buildsystem: cmake-ninja
@@ -327,6 +343,22 @@ modules:
       - type: archive
         url: https://github.com/BlueBrain/HighFive/archive/refs/tags/v2.10.0.tar.gz
         sha256: c29e8e1520e7298fabb26545f804e35bb3af257005c1c2df62e39986458d7c38
+
+  # JSFX audio plug-in support
+  - name: ysfx
+    buildsystem: cmake-ninja
+    config-opts:
+      - -Wno-dev
+      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+      - -DBUILD_SHARED_LIBS=ON
+      - -DYSFX_PLUGIN=OFF
+      - -DYSFX_DEEP_STRIP=OFF
+
+    sources:
+      - type: archive
+        url: https://github.com/jpcima/ysfx/archive/8077347ccf4115567aed81400281dca57acbb0cc.zip
+        sha256: d76d082a33a20c3fa8f4f7c9cd279e36d41e976036001b58c51322b71f964d10
 
   - name: ossia-score
     buildsystem: cmake-ninja
