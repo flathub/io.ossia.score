@@ -65,6 +65,36 @@ cleanup:
   - /include
   - "*.a"
   - "*.la"
+  - "*.java"
+  - "*.d"
+  - "*.cs"
+  - "/share/faust/*.cpp"
+  - "/share/faust/*.h"
+  - /share/faust/api
+  - /share/faust/AU
+  - /share/faust/audiokit
+  - /share/faust/autodiff
+  - /share/faust/chaos-stratus
+  - /share/faust/cmajor
+  - /share/faust/daisy
+  - /share/faust/esp32
+  - /share/faust/examples
+  - /share/faust/iOS
+  - /share/faust/juce
+  - /share/faust/julia
+  - /share/faust/max-msp
+  - /share/faust/nodejs
+  - /share/faust/osclib
+  - /share/faust/sam
+  - /share/faust/smartKeyboard
+  - /share/faust/juce
+  - /share/faust/svgplot
+  - /share/faust/teensy
+  - /share/faust/unity
+  - /share/faust/rust
+  - /share/faust/vcvrack
+  - /share/faust/webaudio
+  - /share/faust/js
   - /lib/cmake
   - /lib/girepository-1.0
   - /lib/pkgconfig
@@ -360,6 +390,47 @@ modules:
         url: https://github.com/jpcima/ysfx/archive/8077347ccf4115567aed81400281dca57acbb0cc.zip
         sha256: d76d082a33a20c3fa8f4f7c9cd279e36d41e976036001b58c51322b71f964d10
 
+  # Faust audio plug-in support
+  - name: faust
+    buildsystem: cmake-ninja
+    subdir: build
+    config-opts:
+      - -Wno-dev
+      - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+      - -DCMAKE_PREFIX_PATH=/usr/lib/sdk/llvm20
+      - -DLLVM_CONFIG=/usr/lib/sdk/llvm20/bin/llvm-config
+      - -DBUILD_SHARED_LIBS=ON
+      - -DINCLUDE_OSC=0
+      - -DINCLUDE_HTTP=0
+      - -DINCLUDE_EXECUTABLE=0
+      - -DINCLUDE_STATIC=0
+      - -DINCLUDE_DYNAMIC=1
+      - -DINCLUDE_WASM_GLUE=0
+      - -DLINK_LLVM_STATIC=0
+      - -DINCLUDE_LLVM=1
+      - -DC_BACKEND=COMPILER
+      - -DCODEBOX_BACKEND=OFF
+      - -DCPP_BACKEND=COMPILER
+      - -DCMAJOR_BACKEND=OFF
+      - -DCSHARP_BACKEND=OFF
+      - -DFIR_BACKEND=OFF
+      - -DINTERP_BACKEND=OFF
+      - -DJAVA_BACKEND=OFF
+      - -DJAX_BACKEND=OFF
+      - -DJSFX_BACKEND=OFF
+      - -DJULIA_BACKEND=OFF
+      - -DLLVM_BACKEND="COMPILER;DYNAMIC"
+      - -DOLDCPP_BACKEND=OFF
+      - -DRUST_BACKEND=OFF
+      - -DSDF3_BACKEND=OFF
+      - -DVHDL_BACKEND=OFF
+      - -DWASM_BACKEND=OFF
+    sources:
+      - type: archive
+        url: https://github.com/grame-cncm/faust/releases/download/2.79.3/faust-2.79.3.tar.gz
+        sha256: ca2171cb136f135960be10fee2c1728304865a5d5190e9a03cace88b4936c558
+
   - name: ossia-score
     buildsystem: cmake-ninja
     builddir: true
@@ -374,11 +445,15 @@ modules:
           - exec ossia-score.bin "$@"
       - type: patch
         path: 0001-v3.5.1-appdata-release-notes.patch
+      - type: patch
+        path: 0001-faust-disable-download-of-faust-libs-if-not-building.patch
 
     config-opts:
       # Note: don't use RelWithDebInfo as ossia release builds explicitly expect Release build type.
       - -DCMAKE_BUILD_TYPE=Release
       - -Wno-dev
+      - -DCMAKE_PREFIX_PATH=/usr/lib/sdk/llvm20
+      - -DLLVM_CONFIG=/usr/lib/sdk/llvm20/bin/llvm-config
       - -DSCORE_DEPLOYMENT_BUILD=1
       - -DSCORE_STATIC_PLUGINS=1
       - -DSCORE_FHS_BUILD=1
@@ -390,6 +465,8 @@ modules:
 
     post-install:
       - install -Dm755 "${FLATPAK_DEST}/bin/ossia-score" "${FLATPAK_DEST}/bin/ossia-score.bin"
+      - install -Dm755 /usr/lib/sdk/llvm20/lib/libLLVM.so.20.1 "${FLATPAK_DEST}/lib/"
+      - install -Dm755 /usr/lib/sdk/llvm20/lib/libclang-cpp.so.20.1 "${FLATPAK_DEST}/lib/"
       - install -Dm755 ../run "${FLATPAK_DEST}/bin/ossia-score"
       - install -d /app/extensions/Plugins
       - install -d /app/lib/ffmpeg
