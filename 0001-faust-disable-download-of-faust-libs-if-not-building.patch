@@ -1,0 +1,68 @@
+From 4508625ef50e320f349d94aaef22c9e5f96ee2f2 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Jean-Micha=C3=ABl=20Celerier?=
+ <jeanmichael.celerier@gmail.com>
+Date: Mon, 21 Apr 2025 11:44:34 -0400
+Subject: [PATCH] faust: disable download of faust libs if not building our own
+ releases
+
+---
+ src/app/main.cpp                              |  3 ++-
+ src/plugins/score-plugin-faust/CMakeLists.txt | 27 ++++++++++---------
+ 2 files changed, 17 insertions(+), 13 deletions(-)
+
+diff --git a/src/app/main.cpp b/src/app/main.cpp
+index 5ba66b26a..ab3c44723 100644
+--- a/src/app/main.cpp
++++ b/src/app/main.cpp
+@@ -413,7 +413,8 @@ static void setup_faust_path()
+   path += "/src/plugins/score-plugin-faust/faustlibs-prefix/src/faustlibs";
+ #endif
+ 
+-  qputenv("FAUST_LIB_PATH", path.c_str());
++  if(QFileInfo{QString::fromUtf8(path)}.isDir())
++    qputenv("FAUST_LIB_PATH", path.c_str());
+ }
+ 
+ static void setup_opengl(bool& enable_opengl_ui)
+diff --git a/src/plugins/score-plugin-faust/CMakeLists.txt b/src/plugins/score-plugin-faust/CMakeLists.txt
+index c27d0f4f7..9a25355f0 100644
+--- a/src/plugins/score-plugin-faust/CMakeLists.txt
++++ b/src/plugins/score-plugin-faust/CMakeLists.txt
+@@ -62,19 +62,22 @@ target_include_directories(${PROJECT_NAME} PRIVATE ${FAUST_INCLUDE_DIR})
+ 
+ setup_score_plugin(${PROJECT_NAME})
+ 
+-message("Downloading Faust libs...")
+-
+-ExternalProject_Add(
+-    faustlibs
+-    PREFIX ""
+-    GIT_REPOSITORY https://github.com/grame-cncm/faustlibraries
+-    GIT_TAG 730eff6dc336973553829235e0b31b24c47a2f69
+-    CONFIGURE_COMMAND ""
+-    BUILD_COMMAND ""
+-    INSTALL_COMMAND ""
+-)
+ 
+-add_dependencies(${PROJECT_NAME} faustlibs)
++if(NOT SCORE_USE_SYSTEM_LIBRARIES)
++  message("Downloading Faust libs...")
++
++  ExternalProject_Add(
++      faustlibs
++      PREFIX ""
++      GIT_REPOSITORY https://github.com/grame-cncm/faustlibraries
++      GIT_TAG 730eff6dc336973553829235e0b31b24c47a2f69
++      CONFIGURE_COMMAND ""
++      BUILD_COMMAND ""
++      INSTALL_COMMAND ""
++  )
++
++  add_dependencies(${PROJECT_NAME} faustlibs)
++endif()
+ 
+ if(WIN32)
+   target_link_libraries(${PROJECT_NAME} PRIVATE ws2_32)
+-- 
+2.49.0
+
