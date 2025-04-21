@@ -62,7 +62,6 @@ add-extensions:
 
 cleanup:
   - /bin/avahi*
-  - /include
   - "*.a"
   - "*.la"
   - "*.java"
@@ -467,6 +466,8 @@ modules:
       - install -Dm755 "${FLATPAK_DEST}/bin/ossia-score" "${FLATPAK_DEST}/bin/ossia-score.bin"
       - install -Dm755 /usr/lib/sdk/llvm20/lib/libLLVM.so.20.1 "${FLATPAK_DEST}/lib/"
       - install -Dm755 /usr/lib/sdk/llvm20/lib/libclang-cpp.so.20.1 "${FLATPAK_DEST}/lib/"
+      - cp -rf /usr/lib/sdk/llvm20/include/* "${FLATPAK_DEST}/include/"
+      - cp -rf /usr/include/* "${FLATPAK_DEST}/include/"
       - install -Dm755 ../run "${FLATPAK_DEST}/bin/ossia-score"
       - install -d /app/extensions/Plugins
       - install -d /app/lib/ffmpeg
