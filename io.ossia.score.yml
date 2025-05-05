@@ -6,6 +6,7 @@ sdk-extensions:
   - org.freedesktop.Sdk.Extension.llvm20
 build-options:
   env:
+    CC: /usr/lib/sdk/llvm20/bin/clang
     CXX: /usr/lib/sdk/llvm20/bin/clang++
 command: ossia-score
 rename-desktop-file: ossia-score.desktop

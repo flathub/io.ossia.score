@@ -5,6 +5,7 @@ config-opts:
   - -Wno-dev
   - -DCMAKE_BUILD_TYPE=RelWithDebInfo
   - -DCMAKE_POSITION_INDEPENDENT_CODE=ON
+  - -DCMAKE_C_FLAGS=-fno-exceptions
   - -DBUILD_SHARED_LIBS=ON
   - -DPA_ALSA_DYNAMIC=ON
   - -DPA_USE_JACK=OFF
