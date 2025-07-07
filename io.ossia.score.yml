@@ -139,8 +139,8 @@ modules:
     builddir: true
     sources:
       - type: archive
-        url: https://github.com/ossia/score/releases/download/v3.5.2/ossia.score-3.5.2-src.tar.xz
-        sha256: a3661841125c47513674da66385cd5b243c7786c1520ca94506499eb96b1a425
+        url: https://github.com/ossia/score/releases/download/v3.5.3/ossia.score-3.5.3-src.tar.xz
+        sha256: 1c0a9d19a64a2118d8fd590fc8a97131142374ecc791ba5deefbf888ad4ee673
 
       - type: script
         dest-filename: run
