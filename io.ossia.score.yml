@@ -39,8 +39,10 @@ finish-args:
   - --filesystem=xdg-run/pipewire-0
 
   # Plugins
-  - --env=VST_PATH=/app/extensions/Plugins/vst
-  - --env=VST3_PATH=/app/extensions/Plugins/vst3
+  - --env=LV2_PATH=$HOME/.lv2:/app/extensions/Plugins/lv2:/app/lib/lv2
+  - --env=VST_PATH=$HOME/.vst:/app/extensions/Plugins/vst:/app/lib/vst
+  - --env=VST3_PATH=$HOME/.vst3:/app/extensions/Plugins/vst3:/app/lib/vst3
+  - --env=CLAP_PATH=$HOME/.clap:/app/extensions/Plugins/clap:/app/lib/clap
 
   # Required to allow screensaver/idle inhibition
   - --talk-name=org.freedesktop.ScreenSaver
@@ -51,7 +53,7 @@ add-extensions:
     directory: extensions/Plugins
     version: "24.08"
     add-ld-path: lib
-    merge-dirs: vst;vst3;lv2
+    merge-dirs: vst;vst3;lv2;clap
     subdirectories: true
     no-autodownload: true
 
@@ -139,13 +141,16 @@ modules:
     builddir: true
     sources:
       - type: archive
-        url: https://github.com/ossia/score/releases/download/v3.5.3/ossia.score-3.5.3-src.tar.xz
-        sha256: 1c0a9d19a64a2118d8fd590fc8a97131142374ecc791ba5deefbf888ad4ee673
+        url: https://github.com/ossia/score/releases/download/v3.6.1/ossia.score-3.6.1-src.tar.xz
+        sha256: 83beedc2f6af1877364d7e1584bbeece90fd09a2220d0b23642e5944f5ca3968
 
       - type: script
         dest-filename: run
         commands:
-          - export LV2_PATH=$HOME/.lv2:/app/extensions/Plugins/lv2:/app/lib/lv2
+          - export LV2_PATH="$HOME/.lv2:/app/extensions/Plugins/lv2:/app/lib/lv2"
+          - export VST_PATH="$HOME/.vst:/app/extensions/Plugins/vst:/app/lib/vst"
+          - export VST3_PATH="$HOME/.vst3:/app/extensions/Plugins/vst3:/app/lib/vst3"
+          - export CLAP_PATH="$HOME/.clap:/app/extensions/Plugins/clap:/app/lib/clap"
           - exec ossia-score.bin "$@"
 
     config-opts:
