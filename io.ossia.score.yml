@@ -38,12 +38,6 @@ finish-args:
   # Audio support through pipewire
   - --filesystem=xdg-run/pipewire-0
 
-  # Plugins
-  - --env=LV2_PATH=$HOME/.lv2:/app/extensions/Plugins/lv2:/app/lib/lv2
-  - --env=VST_PATH=$HOME/.vst:/app/extensions/Plugins/vst:/app/lib/vst
-  - --env=VST3_PATH=$HOME/.vst3:/app/extensions/Plugins/vst3:/app/lib/vst3
-  - --env=CLAP_PATH=$HOME/.clap:/app/extensions/Plugins/clap:/app/lib/clap
-
   # Required to allow screensaver/idle inhibition
   - --talk-name=org.freedesktop.ScreenSaver
 
@@ -141,16 +135,16 @@ modules:
     builddir: true
     sources:
       - type: archive
-        url: https://github.com/ossia/score/releases/download/v3.6.1/ossia.score-3.6.1-src.tar.xz
-        sha256: 83beedc2f6af1877364d7e1584bbeece90fd09a2220d0b23642e5944f5ca3968
+        url: https://github.com/ossia/score/releases/download/v3.7.0/ossia.score-3.7.0-src.tar.xz
+        sha256: 71b2a04bd4814d9d8aa439e2ce593855c5ec55d69b10d48f079d1045ad63f736
 
       - type: script
         dest-filename: run
         commands:
           - export LV2_PATH="$HOME/.lv2:/app/extensions/Plugins/lv2:/app/lib/lv2"
-          - export VST_PATH="$HOME/.vst:/app/extensions/Plugins/vst:/app/lib/vst"
-          - export VST3_PATH="$HOME/.vst3:/app/extensions/Plugins/vst3:/app/lib/vst3"
-          - export CLAP_PATH="$HOME/.clap:/app/extensions/Plugins/clap:/app/lib/clap"
+          - export VST_PATH="/app/extensions/Plugins/vst"
+          - export VST3_PATH="/app/extensions/Plugins/vst3"
+          - export CLAP_PATH="/app/extensions/Plugins/clap"
           - exec ossia-score.bin "$@"
 
     config-opts:
