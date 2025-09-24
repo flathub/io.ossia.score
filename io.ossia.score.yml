@@ -55,7 +55,7 @@ add-extensions:
   org.freedesktop.Platform.ffmpeg-full:
     directory: lib/ffmpeg
     add-ld-path: .
-    version: "24.08"
+    version: "25.08"
 
 cleanup:
   - /bin/avahi*
@@ -135,8 +135,8 @@ modules:
     builddir: true
     sources:
       - type: archive
-        url: https://github.com/ossia/score/releases/download/v3.7.0/ossia.score-3.7.0-src.tar.xz
-        sha256: 71b2a04bd4814d9d8aa439e2ce593855c5ec55d69b10d48f079d1045ad63f736
+        url: https://github.com/ossia/score/releases/download/v3.7.1/ossia.score-3.7.1-src.tar.xz
+        sha256: d84b86c481d11152bba416767b713babfed62fac02b13bfd111f37fa8f3abb3e
 
       - type: script
         dest-filename: run
