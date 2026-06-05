@@ -1,5 +1,6 @@
 # Pitch shifting and resampling
 name: libsamplerate
+disabled: true
 buildsystem: cmake-ninja
 config-opts:
   - -Wno-dev
@@ -7,6 +8,7 @@ config-opts:
   - -DCMAKE_POSITION_INDEPENDENT_CODE=ON
   - -DBUILD_SHARED_LIBS=ON
   - -DBUILD_TESTING=0
+  - -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 sources:
   - type: archive
     url: https://github.com/libsndfile/libsamplerate/archive/4858fb016550d677de2356486bcceda5aed85a72.zip

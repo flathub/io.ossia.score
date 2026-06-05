@@ -1,5 +1,6 @@
 # fmt
 name: fmtlib
+disabled: true
 buildsystem: cmake-ninja
 
 sources:

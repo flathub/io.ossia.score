@@ -1,5 +1,6 @@
 # Dependency of re2
 name: abseil-cpp
+disabled: true
 buildsystem: cmake-ninja
 builddir: true
 config-opts:
