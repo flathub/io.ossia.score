@@ -9,7 +9,7 @@ config-opts:
   - -DHIGHFIVE_BUILD_DOCS=0
   - -DHIGHFIVE_FIND_HDF5=1
   - -DHIGHFIVE_USE_BOOST=0
-
+  - -DCMAKE_POLICY_VERSION_MINIMUM=3.5
 sources:
   - type: archive
     url: https://github.com/BlueBrain/HighFive/archive/refs/tags/v2.10.0.tar.gz

@@ -2,11 +2,12 @@
 name: faust
 buildsystem: cmake-ninja
 subdir: build
+build-options:
+  cxxflags: -include cstdint
 config-opts:
   - -Wno-dev
   - -DCMAKE_BUILD_TYPE=RelWithDebInfo
   - -DCMAKE_POSITION_INDEPENDENT_CODE=ON
-  - -DCMAKE_PREFIX_PATH=/usr/lib/sdk/llvm20
   - -DLLVM_CONFIG=/usr/lib/sdk/llvm20/bin/llvm-config
   - -DBUILD_SHARED_LIBS=ON
   - -DINCLUDE_OSC=0
